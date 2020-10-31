@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 ##1. confidene intervasl 
@@ -33,5 +34,22 @@ desert_bighorns <- c(32, 44, 18, 26, 50, 33, 42, 20)
 sierra_bighorns <- c(28, 31, 40, 42, 26, 29, 31)
 
 t.test(x= desert_bighorns, y=sierra_bighorns)
+```
+
+## End Part 1
+
+## Part 2: Two-sample t-test 
+
+```{r}
+compact_SUV <- mpg %>% 
+  filter(class %in% c("compact", "suv"))
+```
+
+### Exploratory dat viz
+
+Exploratory histograms:
+```{r}
+ggplot(data= compact_suv, aes(x= cty)) +
+  geom_histogram()
 ```
 

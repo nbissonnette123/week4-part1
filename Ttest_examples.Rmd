@@ -41,7 +41,7 @@ t.test(x= desert_bighorns, y=sierra_bighorns)
 ## Part 2: Two-sample t-test 
 
 ```{r}
-compact_SUV <- mpg %>% 
+compact_suv <- mpg %>% 
   filter(class %in% c("compact", "suv"))
 ```
 
@@ -50,6 +50,38 @@ compact_SUV <- mpg %>%
 Exploratory histograms:
 ```{r}
 ggplot(data= compact_suv, aes(x= cty)) +
-  geom_histogram()
+  geom_histogram()+
+  facet_wrap(~class)
+```
+### quantile-quantile
+```{r}
+ggplot(data= compact_suv, aes(sample= cty)) +
+  geom_qq()+
+  facet_wrap(~class)
+```
+
+### Descriptive Statistics
+
+```{r}
+cars_stats<- compact_suv %>% 
+  group_by(class) %>% 
+  summarize(mean_city = mean(cty),
+            sd_city = sd(cty),
+            n= n())
+```
+
+### 2-sample t-test
+Create vectors containing obsrvations for each sample (city gas Milage)
+
+```{r}
+compact_sample <- compact_suv %>% 
+  filter(class== "compact") %>% 
+pull(cty)
+
+suv_sample <- compact_suv %>% 
+  filter(class== "suv") %>% 
+  pull(cty)
+
+t.test(x= compact_sample, suv_sample)
 ```
 
